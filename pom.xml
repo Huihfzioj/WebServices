@@ -10,6 +10,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>ProjetSOC</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>ProjetSOC</name>
 	<description>Projet SOC</description>
 	<url/>
@@ -19,6 +20,9 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>AdministrativeRequests</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -88,6 +92,11 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-jaxb</artifactId>
 			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 

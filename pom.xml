@@ -10,6 +10,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>ProjetSOC</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>ProjetSOC</name>
 	<description>Projet SOC</description>
 	<url/>
@@ -19,6 +20,9 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>AdministrativeRequests</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>

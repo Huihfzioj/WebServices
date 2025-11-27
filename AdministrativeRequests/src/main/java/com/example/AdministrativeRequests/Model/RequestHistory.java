@@ -1,4 +1,5 @@
-package com.example.ProjetSOC.Microservices.AdminRequests.Model;
+package com.example.AdministrativeRequests.Model;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -17,7 +17,7 @@ import java.util.List;
 public class RequestHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -30,7 +30,7 @@ public class RequestHistory {
     @Enumerated(EnumType.STRING)
     private RequestLifecycle newStatus;
 
-    private String actionComment; // optional: why status changed
+    private String actionComment;
 
     private LocalDateTime timestamp;
 
@@ -38,6 +38,7 @@ public class RequestHistory {
 
     @PrePersist
     protected void onCreate() {
-        this.timestamp = LocalDateTime.now();
+        timestamp = LocalDateTime.now();
     }
 }
+

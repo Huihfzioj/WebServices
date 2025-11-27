@@ -1,4 +1,4 @@
-package com.example.ProjetSOC.Microservices.AdminRequests.Model;
+package com.example.AdministrativeRequests.Model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 public class AdminRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long citizenID;
@@ -27,15 +27,14 @@ public class AdminRequest {
     private RequestType type;
 
     @Enumerated(EnumType.STRING)
-    private RequestLifecycle status;
+    private RequestLifecycle status = RequestLifecycle.PENDING;
 
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
 
     private String comment;
 
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RequestHistory> history = new ArrayList<>();
 
     private String decisionReason;
@@ -45,12 +44,13 @@ public class AdminRequest {
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 }
+

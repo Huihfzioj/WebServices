@@ -1,13 +1,11 @@
-package com.example.ProjetSOC;
+package com.example.AdministrativeRequests;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProjetSOC {
-
+public class AdministrativeRequestsApplication {
     public static void main(String[] args) {
-
-        SpringApplication.run(ProjetSOC.class, args);
-
+        SpringApplication.run(AdministrativeRequestsApplication.class, args);
     }
 }

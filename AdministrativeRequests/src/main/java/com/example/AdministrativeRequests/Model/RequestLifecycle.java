@@ -1,4 +1,4 @@
-package com.example.ProjetSOC.Microservices.AdminRequests.Model;
+package com.example.AdministrativeRequests.Model;
 
 public enum RequestLifecycle {
     PENDING,IN_REVIEW,APPROVED,REJECTED,COMPLETED;

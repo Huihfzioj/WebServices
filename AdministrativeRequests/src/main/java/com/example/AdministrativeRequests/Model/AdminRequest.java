@@ -1,5 +1,6 @@
 package com.example.AdministrativeRequests.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class AdminRequest {
     @Enumerated(EnumType.STRING)
     private RequestType type;
 
+
     @Enumerated(EnumType.STRING)
     private RequestLifecycle status = RequestLifecycle.PENDING;
 
@@ -35,6 +37,7 @@ public class AdminRequest {
     private String comment;
 
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RequestHistory> history = new ArrayList<>();
 
     private String decisionReason;

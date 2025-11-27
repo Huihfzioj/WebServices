@@ -16,4 +16,7 @@ public interface AdminRequestRepo extends JpaRepository<AdminRequest,Long> {
 
     List<AdminRequest> findByType(RequestType type);
 
+    List<AdminRequest> findByCitizenIDAndType(Long citizenID, RequestType type);
+    List<AdminRequest> findByCitizenIDAndStatus(Long citizenID, RequestLifecycle status);
+    List<AdminRequest> findByCitizenIDAndTypeAndStatus(Long citizenID, RequestType type, RequestLifecycle status);
 }

@@ -1,0 +1,123 @@
+type GovernmentService {
+    id: ID
+    serviceCode: String
+    name: String
+    description: String
+    detailedDescription: String
+    type: ServiceType
+    category: ServiceCategory
+    requiredDocuments: [String]
+    processingTimeDays: Int
+    fees: Float
+    eligibilityCriteria: [String]
+    availableOnline: Boolean
+    onlinePortalUrl: String
+    isActive: Boolean
+    createdDate: String
+    lastUpdated: String
+}
+
+enum ServiceType {
+    PASSPORT_RENEWAL
+    TAX_CERTIFICATE
+    RESIDENCY_CERTIFICATE
+    BUSINESS_REGISTRATION
+    BIRTH_CERTIFICATE
+    MARRIAGE_CERTIFICATE
+    DRIVERS_LICENSE
+    BUILDING_PERMIT
+}
+
+enum ServiceCategory {
+    IDENTIFICATION
+    TAXATION
+    RESIDENCY
+    BUSINESS
+    CIVIL_REGISTRY
+    TRANSPORTATION
+    CONSTRUCTION
+    HEALTH
+    EDUCATION
+    SOCIAL
+}
+
+type GeoCoordinates {
+    latitude: Float
+    longitude: Float
+}
+
+type ServiceLocation {
+    id: ID
+    locationCode: String
+    name: String
+    address: String
+    city: String
+    state: String
+    zipCode: String
+    phone: String
+    mail: String
+    website: String
+    operatingHours: [String]
+    coordinates: GeoCoordinates
+    availableServiceIds: [String]
+}
+
+# QUERIES
+type Query {
+    getAllServices: [GovernmentService]
+    getServiceById(id: ID!): GovernmentService
+    getServicesByCategory(category: ServiceCategory!): [GovernmentService]
+    getServicesByType(type: ServiceType!): [GovernmentService]
+
+    getAllLocations: [ServiceLocation]
+    getLocationById(id: ID!): ServiceLocation
+    getLocationsByCity(city: String!): [ServiceLocation]
+    getLocationsOfferingService(serviceId: String!): [ServiceLocation]
+}
+
+# MUTATIONS
+type Mutation {
+    createService(input: GovernmentServiceInput!): GovernmentService
+    updateService(id: ID!, input: GovernmentServiceInput!): GovernmentService
+    deleteService(id: ID!): Boolean
+
+    createLocation(input: ServiceLocationInput!): ServiceLocation
+    updateLocation(id: ID!, input: ServiceLocationInput!): ServiceLocation
+    deleteLocation(id: ID!): Boolean
+}
+
+input GovernmentServiceInput {
+    serviceCode: String
+    name: String
+    description: String
+    detailedDescription: String
+    type: ServiceType
+    category: ServiceCategory
+    requiredDocuments: [String]
+    processingTimeDays: Int
+    fees: Float
+    eligibilityCriteria: [String]
+    availableOnline: Boolean
+    onlinePortalUrl: String
+    isActive: Boolean
+}
+
+input ServiceLocationInput {
+    locationCode: String
+    name: String
+    address: String
+    city: String
+    state: String
+    zipCode: String
+    phone: String
+    mail: String
+    website: String
+    operatingHours: [String]
+    coordinates: GeoCoordinatesInput
+    availableServiceIds: [String]
+}
+
+input GeoCoordinatesInput {
+    latitude: Float
+    longitude: Float
+}

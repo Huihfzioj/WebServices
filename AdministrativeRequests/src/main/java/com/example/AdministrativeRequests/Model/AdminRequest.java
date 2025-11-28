@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class AdminRequest {
     private String decisionReason;
 
     @ElementCollection
-    private List<String> attachments = new ArrayList<>();
+    private List<MultipartFile> attachments = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

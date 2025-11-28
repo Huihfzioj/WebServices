@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class AdminRequestController {
     }
 
     @PostMapping("/{id}/attachments")
-    public AdminRequest addAttachment(@PathVariable Long id, @RequestParam("file") String file) {
+    public AdminRequest addAttachment(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         return service.addAttachment(id, file);
     }
 

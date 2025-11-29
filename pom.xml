@@ -23,7 +23,8 @@
 	<modules>
 		<module>AdministrativeRequests</module>
 		<module>PublicServices</module>
-	</modules>
+        <module>civilRegistry</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>

@@ -1,19 +1,27 @@
 package com.example.CivilRegistry.Model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
 
-@MappedSuperclass
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "certificates")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
-    @Column(unique = true)
-    protected String certificateNumber;
+    @Column(nullable = false, unique = true)
+    private String certificateNumber;
 
     @Column(nullable = false)
-    protected LocalDate registrationDate;
+    private LocalDate registrationDate;
 }

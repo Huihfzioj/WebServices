@@ -21,4 +21,3 @@ public class MarriageCertificate extends Certificate {
     private LocalDate marriageDate;
     private String marriageLocation;
 }
-

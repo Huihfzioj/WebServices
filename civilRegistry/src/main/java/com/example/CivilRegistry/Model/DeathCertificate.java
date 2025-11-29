@@ -17,4 +17,3 @@ public class DeathCertificate extends Certificate {
     private String placeOfDeath;
     private String causeOfDeath;
 }
-

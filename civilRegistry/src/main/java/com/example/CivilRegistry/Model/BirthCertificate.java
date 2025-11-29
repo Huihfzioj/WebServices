@@ -1,16 +1,14 @@
 package com.example.CivilRegistry.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "birth_certificates")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "birth_certificates")
 public class BirthCertificate extends Certificate {
 
     @OneToOne
@@ -23,4 +21,3 @@ public class BirthCertificate extends Certificate {
     private String fatherName;
     private String motherName;
 }
-

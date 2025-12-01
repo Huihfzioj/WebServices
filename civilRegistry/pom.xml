@@ -47,5 +47,11 @@
         <scope>runtime</scope>
         <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-ri</artifactId>
+            <version>4.0.3</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 </project>

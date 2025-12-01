@@ -7,6 +7,8 @@ import java.time.LocalDate;
 @Table(name = "death_certificates")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class DeathCertificate extends Certificate {
 
     @OneToOne

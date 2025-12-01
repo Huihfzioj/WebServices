@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Citizen {
 
     @Id
@@ -29,5 +31,5 @@ public class Citizen {
     private String motherName;
 
     @Enumerated(EnumType.STRING)
-    private String gender; // MALE / FEMALE
+    private Gender gender;
 }

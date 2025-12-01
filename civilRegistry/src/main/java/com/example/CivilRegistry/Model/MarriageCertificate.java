@@ -8,6 +8,8 @@ import java.time.LocalDate;
 @Table(name = "marriage_certificates")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class MarriageCertificate extends Certificate {
 
     @ManyToOne

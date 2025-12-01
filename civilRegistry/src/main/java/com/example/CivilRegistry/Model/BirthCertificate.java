@@ -6,9 +6,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "birth_certificates")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class BirthCertificate extends Certificate {
 
     @OneToOne

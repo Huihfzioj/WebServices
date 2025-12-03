@@ -9,9 +9,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeathCertificateWS extends CertificateWS {
-    private CitizenWS citizen;
+    @XmlElement(required = true)
+    private String nationalID;
+    @XmlElement(required = true)
     private String deathDate;
+    @XmlElement(required = true)
     private String placeOfDeath;
+    @XmlElement(required = true)
     private String causeOfDeath;
 }
 

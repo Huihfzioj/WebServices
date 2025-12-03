@@ -9,9 +9,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MarriageCertificateWS extends CertificateWS {
-    private CitizenWS spouse1;
-    private CitizenWS spouse2;
+    @XmlElement(required = true)
+    private String nationalIdOfSpouse1;
+    @XmlElement(required = true)
+    private String nationalIdOfSpouse2;
+    @XmlElement(required = true)
     private String marriageDate;
+    @XmlElement(required = true)
     private String marriageLocation;
 }
 

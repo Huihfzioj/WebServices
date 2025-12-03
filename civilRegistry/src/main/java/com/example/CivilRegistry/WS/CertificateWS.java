@@ -9,8 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class CertificateWS {
-    private Long id;
+    @XmlElement(required = true)
     private String certificateNumber;
+    @XmlElement(required = true)
     private String registrationDate;
 }
 

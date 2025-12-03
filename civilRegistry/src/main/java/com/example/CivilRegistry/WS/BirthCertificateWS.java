@@ -9,10 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BirthCertificateWS extends CertificateWS {
+    @XmlElement(required = true)
     private CitizenWS child;
-    private String birthDate;
-    private String birthPlace;
-    private String fatherName;
-    private String motherName;
 }
 

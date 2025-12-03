@@ -44,7 +44,7 @@ public class AdminRequest {
     private String decisionReason;
 
     @ElementCollection
-    private List<MultipartFile> attachments = new ArrayList<>();
+    private List<String> attachments = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

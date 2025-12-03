@@ -11,7 +11,11 @@ import com.example.AdministrativeRequests.Repository.ReqHistoryRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +33,8 @@ public class AdminRequestService {
         req.setCitizenID(request.getCitizenId());
         req.setType(request.getType());
         req.setComment(request.getComment());
-        req.setAttachments(request.getAttachments());
+        if (request.getAttachments() != null)
+            req.getAttachments().addAll(request.getAttachments());
         AdminRequest saved=requestRepo.save(req);
         addHistory(saved, null, RequestLifecycle.PENDING, "Request created", "CITIZEN_PORTAL");
         return saved;
@@ -83,11 +88,32 @@ public class AdminRequestService {
         return changeStatus(id, RequestLifecycle.COMPLETED, dto);
     }
 
-    public AdminRequest addAttachment(Long id, String fileName) {
+    public AdminRequest addAttachment(Long id, MultipartFile file) {
         AdminRequest req = getRequest(id);
+
+        // store file physically or in cloud
+        String fileName = saveFile(file);
+
         req.getAttachments().add(fileName);
         return requestRepo.save(req);
     }
+
+    private String saveFile(MultipartFile file) {
+        try {
+            String uploadDir = "uploads/";
+            Files.createDirectories(Paths.get(uploadDir));
+
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path path = Paths.get(uploadDir + fileName);
+
+            Files.write(path, file.getBytes());
+
+            return fileName;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save file: " + e.getMessage());
+        }
+    }
+
 
     public List<RequestHistory> getHistory(Long id) {
         AdminRequest req = getRequest(id);

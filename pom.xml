@@ -24,7 +24,8 @@
 		<module>AdministrativeRequests</module>
 		<module>PublicServices</module>
         <module>civilRegistry</module>
-    </modules>
+		<module>QueueAndUpdate</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>

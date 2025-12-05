@@ -1,5 +1,6 @@
 package com.example.AdministrativeRequests.Controller;
 
+import com.example.AdministrativeRequests.DTO.AdminRequestStatusDTO;
 import com.example.AdministrativeRequests.DTO.CreateRequestDTO;
 import com.example.AdministrativeRequests.DTO.UpdateStatusDTO;
 import com.example.AdministrativeRequests.Model.AdminRequest;
@@ -96,6 +97,10 @@ public class AdminRequestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to filter requests: " + e.getMessage());
         }
+    }
+    @GetMapping("/{id}/status-summary")
+    public AdminRequestStatusDTO getRequestStatus(@PathVariable Long id){
+        return service.getStatusDTO(id);
     }
 }
 

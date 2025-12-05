@@ -18,6 +18,9 @@ service QueueService {
   rpc GetPosition(GetPositionRequest) returns (GetPositionResponse);
 }
 
+service AdminRequestWatcherService {
+  rpc StreamRequestStatus(RequestStatusRequest) returns (stream RequestStatusUpdate);
+}
 message JoinQueueRequest {
   string serviceId = 1;
   string locationId = 2;
@@ -71,4 +74,14 @@ message GetPositionResponse {
   int32 position = 2;
   int32 waiting = 3;
   string message = 4;
+}
+
+message RequestStatusUpdate {
+  int64 id = 1;
+  string type = 2;
+  string status = 3;
+}
+
+message RequestStatusRequest {
+  int64 requestId = 1;
 }

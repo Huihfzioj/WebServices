@@ -73,7 +73,6 @@ public class QueueServiceImpl extends QueueServiceGrpc.QueueServiceImplBase {
     @Override
     public void streamQueueStatus(QueueStatusRequest request, StreamObserver<QueueStatusResponse> responseObserver) {
 
-        // 1️⃣ Cast to ServerCallStreamObserver to access cancellation hooks
         ServerCallStreamObserver<QueueStatusResponse> serverObserver =
                 (ServerCallStreamObserver<QueueStatusResponse>) responseObserver;
 
@@ -81,15 +80,16 @@ public class QueueServiceImpl extends QueueServiceGrpc.QueueServiceImplBase {
         String locationId = request.getLocationId();
         String userId = request.getUserId();
 
-        // 2️⃣ Set cancel handler to print/log if client cancels
         serverObserver.setOnCancelHandler(() -> {
             System.out.println("Client cancelled streaming for user: " + userId);
         });
 
-        // 3️⃣ Schedule periodic updates
+        // Store previous state to detect changes
+        final int[] prevPosition = {-1};
+        final int[] prevWaiting = {-1};
+
         scheduler.scheduleAtFixedRate(() -> {
 
-            // 4️⃣ Check if client has cancelled before sending updates
             if (serverObserver.isCancelled()) {
                 return; // stop sending updates
             }
@@ -101,24 +101,29 @@ public class QueueServiceImpl extends QueueServiceGrpc.QueueServiceImplBase {
                         ? 0
                         : queueManager.getPosition(serviceId, locationId, userId);
 
-                // Build response
-                QueueStatusResponse resp = QueueStatusResponse.newBuilder()
-                        .setUserId(userId == null ? "" : userId)
-                        .setPosition(position)
-                        .setWaiting(waiting)
-                        .setEvent("stats")
-                        .setDetail("periodic update")
-                        .setUpdatedAt(Instant.now().toString())
-                        .build();
+                if (position != prevPosition[0] || waiting != prevWaiting[0]) {
 
-                // Send update
-                serverObserver.onNext(resp);
+                    QueueStatusResponse resp = QueueStatusResponse.newBuilder()
+                            .setUserId(userId == null ? "" : userId)
+                            .setPosition(position)
+                            .setWaiting(waiting)
+                            .setEvent("stats")
+                            .setDetail("update")
+                            .setUpdatedAt(Instant.now().toString())
+                            .build();
+
+                    serverObserver.onNext(resp);
+
+                    // Update previous state
+                    prevPosition[0] = position;
+                    prevWaiting[0] = waiting;
+                }
 
             } catch (Exception e) {
                 serverObserver.onError(e);
             }
 
-        }, 0, 2, TimeUnit.SECONDS); // run every 2 seconds
+        }, 0, 2, TimeUnit.SECONDS); // polling every 2s
     }
 }
 

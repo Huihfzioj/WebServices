@@ -15,27 +15,46 @@ public class RequestTrackingServiceImpl
     private final AdminRequestRestClient restClient;
 
     @Override
-    public void streamRequestStatus(RequestStatusRequest request,
-                                    StreamObserver<RequestStatusUpdate> responseObserver) {
+    public void streamRequestStatus(
+            RequestStatusRequest request,
+            StreamObserver<RequestStatusUpdate> responseObserver) {
 
         Long requestId = request.getRequestId();
 
         try {
+            // Fetch initial status
+            AdminRequestStatusDTO previous = restClient.getRequestById(requestId);
+
+            // Send initial status
+            sendStatus(responseObserver, previous);
+
             while (true) {
-                AdminRequestStatusDTO statusDTO = restClient.getRequestById(requestId);
+                Thread.sleep(1000); // Poll interval
 
-                RequestStatusUpdate update = RequestStatusUpdate.newBuilder()
-                        .setId(statusDTO.getId())
-                        .setType(statusDTO.getType())
-                        .setStatus(statusDTO.getStatus())
-                        .build();
+                AdminRequestStatusDTO current = restClient.getRequestById(requestId);
 
-                responseObserver.onNext(update);
+                // Only send when status changed or type changed
+                if (!current.getStatus().equals(previous.getStatus())) {
 
-                Thread.sleep(1000); // Poll every 1s
+                    sendStatus(responseObserver, current);
+                    previous = current;
+                }
             }
+
         } catch (Exception e) {
             responseObserver.onError(e);
         }
+    }
+
+    private void sendStatus(StreamObserver<RequestStatusUpdate> responseObserver,
+                            AdminRequestStatusDTO dto) {
+
+        RequestStatusUpdate update = RequestStatusUpdate.newBuilder()
+                .setId(dto.getId())
+                .setType(dto.getType())
+                .setStatus(dto.getStatus())
+                .build();
+
+        responseObserver.onNext(update);
     }
 }

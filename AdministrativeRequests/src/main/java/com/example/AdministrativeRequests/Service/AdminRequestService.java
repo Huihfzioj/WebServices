@@ -1,5 +1,6 @@
 package com.example.AdministrativeRequests.Service;
 
+import com.example.AdministrativeRequests.DTO.AdminRequestStatusDTO;
 import com.example.AdministrativeRequests.DTO.CreateRequestDTO;
 import com.example.AdministrativeRequests.DTO.UpdateStatusDTO;
 import com.example.AdministrativeRequests.Model.AdminRequest;
@@ -142,5 +143,13 @@ public class AdminRequestService {
 
         historyRepo.save(history);
         req.getHistory().add(history);
+    }
+    public AdminRequestStatusDTO getStatusDTO(Long id){
+        AdminRequest request=this.getRequest(id);
+        AdminRequestStatusDTO response=new AdminRequestStatusDTO();
+        response.setId(request.getId());
+        response.setStatus(String.valueOf(request.getStatus()));
+        response.setType(String.valueOf(request.getType()));
+        return response;
     }
 }

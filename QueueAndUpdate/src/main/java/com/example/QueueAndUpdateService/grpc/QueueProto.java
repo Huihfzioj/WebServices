@@ -54,6 +54,16 @@ public final class QueueProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_queue_GetPositionResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_queue_RequestStatusUpdate_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_queue_RequestStatusUpdate_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_queue_RequestStatusRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_queue_RequestStatusRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -80,16 +90,22 @@ public final class QueueProto {
       "\tserviceId\030\001 \001(\t\022\022\n\nlocationId\030\002 \001(\t\022\016\n\006" +
       "userId\030\003 \001(\t\"Z\n\023GetPositionResponse\022\017\n\007i" +
       "nQueue\030\001 \001(\010\022\020\n\010position\030\002 \001(\005\022\017\n\007waitin" +
-      "g\030\003 \001(\005\022\017\n\007message\030\004 \001(\t2\245\002\n\014QueueServic" +
-      "e\022>\n\tJoinQueue\022\027.queue.JoinQueueRequest\032" +
-      "\030.queue.JoinQueueResponse\022A\n\nLeaveQueue\022" +
-      "\030.queue.LeaveQueueRequest\032\031.queue.LeaveQ" +
-      "ueueResponse\022L\n\021StreamQueueStatus\022\031.queu" +
-      "e.QueueStatusRequest\032\032.queue.QueueStatus" +
-      "Response0\001\022D\n\013GetPosition\022\031.queue.GetPos" +
-      "itionRequest\032\032.queue.GetPositionResponse" +
-      "B6\n&com.example.QueueAndUpdateService.gr" +
-      "pcB\nQueueProtoP\001b\006proto3"
+      "g\030\003 \001(\005\022\017\n\007message\030\004 \001(\t\"?\n\023RequestStatu" +
+      "sUpdate\022\n\n\002id\030\001 \001(\003\022\014\n\004type\030\002 \001(\t\022\016\n\006sta" +
+      "tus\030\003 \001(\t\")\n\024RequestStatusRequest\022\021\n\treq" +
+      "uestId\030\001 \001(\0032\245\002\n\014QueueService\022>\n\tJoinQue" +
+      "ue\022\027.queue.JoinQueueRequest\032\030.queue.Join" +
+      "QueueResponse\022A\n\nLeaveQueue\022\030.queue.Leav" +
+      "eQueueRequest\032\031.queue.LeaveQueueResponse" +
+      "\022L\n\021StreamQueueStatus\022\031.queue.QueueStatu" +
+      "sRequest\032\032.queue.QueueStatusResponse0\001\022D" +
+      "\n\013GetPosition\022\031.queue.GetPositionRequest" +
+      "\032\032.queue.GetPositionResponse2n\n\032AdminReq" +
+      "uestWatcherService\022P\n\023StreamRequestStatu" +
+      "s\022\033.queue.RequestStatusRequest\032\032.queue.R" +
+      "equestStatusUpdate0\001B6\n&com.example.Queu" +
+      "eAndUpdateService.grpcB\nQueueProtoP\001b\006pr" +
+      "oto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -143,6 +159,18 @@ public final class QueueProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_queue_GetPositionResponse_descriptor,
         new java.lang.String[] { "InQueue", "Position", "Waiting", "Message", });
+    internal_static_queue_RequestStatusUpdate_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_queue_RequestStatusUpdate_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_queue_RequestStatusUpdate_descriptor,
+        new java.lang.String[] { "Id", "Type", "Status", });
+    internal_static_queue_RequestStatusRequest_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_queue_RequestStatusRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_queue_RequestStatusRequest_descriptor,
+        new java.lang.String[] { "RequestId", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

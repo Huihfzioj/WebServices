@@ -23,9 +23,7 @@ public class CitizenWS {
     private String birthDate;
     @XmlElement(required = true)
     private String birthPlace;
-    @XmlElement(required = true)
     private String fatherName;
-    @XmlElement(required = true)
     private String motherName;
     @XmlElement(required = true)
     private String gender;

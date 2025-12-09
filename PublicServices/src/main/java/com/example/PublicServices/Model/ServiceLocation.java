@@ -17,7 +17,7 @@ public class ServiceLocation {
     @Id
     private String id;
 
-    @Field("location_code")
+    @Field("locationCode")
     private String locationCode;
 
     private String name;
@@ -26,10 +26,10 @@ public class ServiceLocation {
     private String state;
     private String zipCode;
 
-    @Field("phone_number")
+    @Field("phone")
     private String phone;
 
-    @Field("email")
+    @Field("mail")
     private String mail;
 
     private String website;
@@ -37,7 +37,7 @@ public class ServiceLocation {
     @Field("operating_hours")
     private List<String> operatingHours;
 
-    @Field("geo_coordinates")
+    @Field("coordinates")
     private GeoCoordinates coordinates;
 
     @Field("available_services")

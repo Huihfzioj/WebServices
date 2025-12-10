@@ -49,5 +49,12 @@ public interface CivilRegistryWS {
     @WebMethod
     CitizenWS createCitizen(@WebParam(name = "request") CitizenWS request);
 
+    @WebMethod
+    List<BirthCertificateWS> getAllBirthCertificates();
 
+    @WebMethod
+    List<MarriageCertificateWS> getAllMarriageCertificates();
+
+    @WebMethod
+    List<DeathCertificateWS> getAllDeathCertificates();
 }

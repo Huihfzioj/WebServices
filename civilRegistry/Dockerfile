@@ -7,4 +7,6 @@ WORKDIR /app
 COPY civilRegistry/target/CivilRegistry-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8084
+EXPOSE 8089
+
 ENTRYPOINT ["java", "-jar", "app.jar"]

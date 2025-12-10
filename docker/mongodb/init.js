@@ -92,6 +92,23 @@ db.government_services.insertMany([
     is_active: true,
     created_date: new Date(),
     last_updated: new Date()
+  },
+  {
+    _id: ObjectId(),
+    service_code: "DEATH001",
+    name: "Death Certificate Issuance",
+    description: "Request official death certificates",
+    detailed_description: "Apply for certified copies of death certificates for vital records, insurance, and legal purposes.",
+    type: "DEATH_CERTIFICATE",
+    category: "VITAL_RECORDS",
+    required_docs: ["Valid ID", "Proof of Relationship", "Death Notification", "Application Form"],
+    processing_time_days: 5,
+    fees: 25.00,
+    eligibility_criteria: ["Legal guardian or immediate family member", "Death must be registered"],
+    available_online: false,
+    is_active: true,
+    created_date: new Date(),
+    last_updated: new Date()
   }
 ]);
 
@@ -120,7 +137,8 @@ db.service_locations.insertMany([
     available_services: [
       db.government_services.findOne({ service_code: "TAX001" })._id.toString(),
       db.government_services.findOne({ service_code: "CERT001" })._id.toString(),
-      db.government_services.findOne({ service_code: "PASS001" })._id.toString()
+      db.government_services.findOne({ service_code: "PASS001" })._id.toString(),
+      db.government_services.findOne({ service_code: "DEATH001" })._id.toString()
     ]
   },
   {
@@ -171,7 +189,8 @@ db.service_locations.insertMany([
     },
     available_services: [
       db.government_services.findOne({ service_code: "CERT001" })._id.toString(),
-      db.government_services.findOne({ service_code: "PERM001" })._id.toString()
+      db.government_services.findOne({ service_code: "PERM001" })._id.toString(),
+      db.government_services.findOne({ service_code: "DEATH001" })._id.toString()
     ]
   },
   {
@@ -204,5 +223,5 @@ db.service_locations.insertMany([
 
 print("✅ Successfully initialized public_services_db with sample data!");
 print("Collections created:");
-print("  - government_services: 5 documents");
+print("  - government_services: 6 documents");
 print("  - service_locations: 4 documents");

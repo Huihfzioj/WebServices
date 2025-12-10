@@ -11,6 +11,7 @@ public enum ServiceType {
     BIRTH_CERTIFICATE("Birth Certificate"),
     MARRIAGE_CERTIFICATE("Marriage Certificate"),
     DRIVERS_LICENSE("Driver's License"),
+    DEATH_CERTIFICATE("Death Certificate"),
     BUILDING_PERMIT("Building Permit");
 
     private final String displayName;

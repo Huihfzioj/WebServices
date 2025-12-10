@@ -234,6 +234,29 @@ public class CivilRegistryWSImpl implements CivilRegistryWS {
         return toDeathWS(d);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<BirthCertificateWS> getAllBirthCertificates() {
+        return birthRepo.findAll().stream()
+                .map(this::toBirthWS)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<MarriageCertificateWS> getAllMarriageCertificates() {
+        return marriageRepo.findAll().stream()
+                .map(this::toMarriageWS)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<DeathCertificateWS> getAllDeathCertificates() {
+        return deathRepo.findAll().stream()
+                .map(this::toDeathWS)
+                .collect(Collectors.toList());
+    }
     // ---------- converters ----------
     private CitizenWS toCitizenWS(Citizen c) {
         CitizenWS ws = new CitizenWS();

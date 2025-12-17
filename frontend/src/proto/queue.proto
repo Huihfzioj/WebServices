@@ -1,0 +1,86 @@
+syntax = "proto3";
+package queue;
+option java_multiple_files = true;
+option java_package = "com.example.QueueAndUpdateService.grpc";
+option java_outer_classname = "QueueProto";
+
+service QueueService {
+  // Client calls to join the service queue
+  rpc JoinQueue(JoinQueueRequest) returns (JoinQueueResponse);
+
+  // Client calls to leave the queue (cancel)
+  rpc LeaveQueue(LeaveQueueRequest) returns (LeaveQueueResponse);
+
+  // Server-streaming: client receives continuous updates for their queue
+  rpc StreamQueueStatus(QueueStatusRequest) returns (stream QueueStatusResponse);
+
+  // Get user position and simple stats (unary)
+  rpc GetPosition(GetPositionRequest) returns (GetPositionResponse);
+}
+
+service AdminRequestWatcherService {
+  rpc StreamRequestStatus(RequestStatusRequest) returns (stream RequestStatusUpdate);
+}
+
+message JoinQueueRequest {
+  string serviceId = 1;
+  string locationId = 2;
+  string userId = 3;
+}
+
+message JoinQueueResponse {
+  bool success = 1;
+  int32 position = 2;
+  int32 waiting = 3;
+  string message = 4;
+}
+
+message LeaveQueueRequest {
+  string serviceId = 1;
+  string locationId = 2;
+  string userId = 3;
+}
+
+message LeaveQueueResponse {
+  bool success = 1;
+  int32 waiting = 2;
+  string message = 3;
+}
+
+message QueueStatusRequest {
+  string serviceId = 1;
+  string locationId = 2;
+  string userId = 3;
+}
+
+message QueueStatusResponse {
+  string userId = 1;
+  int32 position = 2;
+  int32 waiting = 3;
+  string event = 4;
+  string detail = 5;
+  string updatedAt = 6;
+}
+
+message GetPositionRequest {
+  string serviceId = 1;
+  string locationId = 2;
+  string userId = 3;
+}
+
+message GetPositionResponse {
+  bool inQueue = 1;
+  int32 position = 2;
+  int32 waiting = 3;
+  string message = 4;
+}
+
+message RequestStatusUpdate {
+  int64 id = 1;
+  string type = 2;
+  string status = 3;
+}
+
+message RequestStatusRequest {
+  int64 requestId = 1;
+}

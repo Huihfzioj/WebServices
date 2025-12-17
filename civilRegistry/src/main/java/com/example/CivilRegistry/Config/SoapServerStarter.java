@@ -29,8 +29,7 @@ public class SoapServerStarter {
                 context.getBean(DeathCertificateRepository.class)
         );
 
-        // Bind to all interfaces so other containers (gateway/front-end) can reach the SOAP endpoint.
-        String url = "http://0.0.0.0:8089/CivilRegistry";
+        String url = "http://localhost:8084/CivilRegistry";
         Endpoint.publish(url, impl);
 
         System.out.println("SOAP endpoint running at: " + url + "?wsdl");

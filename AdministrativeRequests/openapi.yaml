@@ -1,0 +1,279 @@
+openapi: 3.0.3
+info:
+  title: Administrative Requests API
+  version: "1.0.0"
+  description: REST API to manage administrative requests.
+
+servers:
+  - url: http://localhost:8081
+
+paths:
+
+  /api/requests:
+    post:
+      summary: Create a new request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRequestDTO'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminRequest'
+
+  /api/requests/{id}:
+    get:
+      summary: Get a request by ID
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminRequest'
+        '404':
+          description: Not found
+
+  /api/requests/citizen/{id}:
+    get:
+      summary: Get all requests for a citizen
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminRequest'
+
+  /api/requests/status/{status}:
+    get:
+      summary: Get all requests by status
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RequestLifecycle'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminRequest'
+
+  /api/requests/{id}/start-review:
+    put:
+      summary: Start review (set IN_REVIEW)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateStatusDTO' }
+      responses:
+        '200': { description: OK }
+
+  /api/requests/{id}/approve:
+    put:
+      summary: Approve a request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateStatusDTO' }
+      responses:
+        '200': { description: OK }
+
+  /api/requests/{id}/reject:
+    put:
+      summary: Reject a request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateStatusDTO' }
+      responses:
+        '200': { description: OK }
+
+  /api/requests/{id}/complete:
+    put:
+      summary: Mark request completed
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateStatusDTO' }
+      responses:
+        '200': { description: OK }
+
+  /api/requests/{id}/attachments:
+    post:
+      summary: Upload an attachment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+
+  /api/requests/{id}/history:
+    get:
+      summary: Get full request history
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RequestHistory'
+
+  /api/requests/filter:
+    get:
+      summary: Filter requests by citizen, type, or status
+      parameters:
+        - in: query
+          name: citizenId
+          schema: { type: integer }
+        - in: query
+          name: type
+          schema:
+            $ref: '#/components/schemas/RequestType'
+        - in: query
+          name: status
+          schema:
+            $ref: '#/components/schemas/RequestLifecycle'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdminRequest'
+
+components:
+  schemas:
+
+    AdminRequest:
+      type: object
+      properties:
+        id: { type: integer }
+        citizenID: { type: integer }
+        type:
+          $ref: '#/components/schemas/RequestType'
+        status:
+          $ref: '#/components/schemas/RequestLifecycle'
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        comment: { type: string }
+        decisionReason: { type: string }
+        attachments:
+          type: array
+          items: { type: string }
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestHistory'
+
+    CreateRequestDTO:
+      type: object
+      required: [citizenId, type]
+      properties:
+        citizenId: { type: integer }
+        type:
+          $ref: '#/components/schemas/RequestType'
+        comment: { type: string }
+        attachments:
+          type: array
+          items: { type: string }
+
+    UpdateStatusDTO:
+      type: object
+      properties:
+        decisionReason: { type: string }
+        processingOffice: { type: string }
+        comment: { type: string }
+
+    RequestHistory:
+      type: object
+      properties:
+        id: { type: integer }
+        oldStatus:
+          $ref: '#/components/schemas/RequestLifecycle'
+        newStatus:
+          $ref: '#/components/schemas/RequestLifecycle'
+        actionComment: { type: string }
+        timestamp: { type: string, format: date-time }
+        processingOffice: { type: string }
+
+    RequestLifecycle:
+      type: string
+      enum: [PENDING, IN_REVIEW, APPROVED, REJECTED, COMPLETED]
+
+    RequestType:
+      type: string
+      enum:
+        - PASSPORT_RENEWAL
+        - TAX_CERTIFICATE
+        - RESIDENCY_CERTIFICATE
+        - BUSINESS_REGISTRATION
+        - BIRTH_CERTIFICATE
+        - MARRIAGE_CERTIFICATE
+        - DRIVERS_LICENSE
+        - BUILDING_PERMIT
+        - DEATH_CERTIFICATE

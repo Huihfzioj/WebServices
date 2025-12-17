@@ -1,0 +1,13 @@
+package com.example.AdministrativeRequests.Model;
+
+public enum RequestType {
+    PASSPORT_RENEWAL,
+    TAX_CERTIFICATE,
+    RESIDENCY_CERTIFICATE,
+    BUSINESS_REGISTRATION,
+    BIRTH_CERTIFICATE,
+    MARRIAGE_CERTIFICATE,
+    DRIVERS_LICENSE,
+    BUILDING_PERMIT,
+    DEATH_CERTIFICATE;
+}
